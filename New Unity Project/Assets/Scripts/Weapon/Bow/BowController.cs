@@ -52,7 +52,6 @@ public class BowController : WeaponUtilities
 
             if (Physics.OverlapSphere(newPoint, 2, collidableLayers).Length > 0)
             {
-                Debug.Log("col");
                 _lineRenderer.positionCount = points.Count;
                 break;
             }
