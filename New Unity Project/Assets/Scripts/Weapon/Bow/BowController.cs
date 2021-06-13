@@ -26,11 +26,6 @@ public class BowController : WeaponUtilities
     private Vector3 startingVelocity;
     private Vector3 newPoint;
 
-    private void Awake()
-    {
-        _lineRenderer.positionCount = numPoints;
-    }
-
     private void Update()
     {
         _firePoint = CalculateFirePoint();
@@ -41,6 +36,7 @@ public class BowController : WeaponUtilities
 
     private void DrawTrajectory()
     {
+        _lineRenderer.positionCount = numPoints;
         points = new List<Vector3>();
         startingVelocity = transform.forward * arrowForce;
 
@@ -50,7 +46,7 @@ public class BowController : WeaponUtilities
             newPoint.y = _firePoint.y + startingVelocity.y * i + Physics.gravity.y / 2f * i * i;
             points.Add(newPoint);
 
-            if (Physics.OverlapSphere(newPoint, 2, collidableLayers).Length > 0)
+            if (Physics.OverlapSphere(newPoint, collideRadius, collidableLayers).Length > 0)
             {
                 _lineRenderer.positionCount = points.Count;
                 break;
