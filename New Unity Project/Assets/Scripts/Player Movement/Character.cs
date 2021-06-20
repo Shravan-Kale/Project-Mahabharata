@@ -11,19 +11,6 @@ public class Character : MonoBehaviour
     public CameraController cameraController;
     public CharacterMovement characterMovement;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void AddMovementInput(float forward , float right)
     {
         forwardInput = forward;
@@ -44,13 +31,13 @@ public class Character : MonoBehaviour
         {
             velocity = Vector3.zero;
         }
-        characterMovement.Velocity = translation;
+        characterMovement.velocity = translation;
     }
 
     public float getVelocity()
     {
         
-        return characterMovement.Velocity.magnitude;
+        return characterMovement.velocity.magnitude;
 
     }
 

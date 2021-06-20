@@ -27,6 +27,4 @@ public class PlayerInput : MonoBehaviour
             character.TogglrRun();
         }
     }
-
-    
 }
