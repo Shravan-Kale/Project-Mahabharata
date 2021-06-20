@@ -101,7 +101,7 @@ public class CharacterMovement : MonoBehaviour
             }
             else
             {
-                Debug.Log("Don`t touch" + wallRunOffset);
+                Debug.Log("Don`t touch");
                 rigidBody.useGravity = true;
             }
         }
