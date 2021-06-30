@@ -20,7 +20,7 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        character.AddMovementInput(Input.GetAxis("Vertical") , Input.GetAxis("Horizontal"));
+        character.AddMovementInput(Input.GetAxisRaw("Vertical") , Input.GetAxisRaw("Horizontal"));
 
         if (Input.GetKeyDown(KeyCode.CapsLock))
         {
