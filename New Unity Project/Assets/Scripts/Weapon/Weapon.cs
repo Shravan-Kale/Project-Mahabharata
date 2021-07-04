@@ -40,7 +40,7 @@ public class Weapon : MonoBehaviour
 
     public void ShowText()
     {
-        //Debug.Log("Show text");
+        Debug.Log("Show text");
 
         _currentTime = 0;
 

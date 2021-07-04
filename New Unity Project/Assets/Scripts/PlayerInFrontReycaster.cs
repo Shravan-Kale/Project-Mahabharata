@@ -40,7 +40,7 @@ public class PlayerInFrontReycaster : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        //Gizmos.DrawRay(transform.position + headOffset,
-                      // transform.position - _camera.transform.position);
+        Gizmos.DrawRay(transform.position + headOffset,
+                       transform.position - _camera.transform.position);
     }
 }

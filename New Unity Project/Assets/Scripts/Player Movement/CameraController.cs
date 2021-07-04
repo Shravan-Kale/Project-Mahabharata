@@ -4,56 +4,25 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField]private Transform targetTransform;
-
-    private Camera _Cam;
-    public Camera cam;
-    [SerializeField]private Vector3 CamOffset = Vector3.zero;
-    [SerializeField]private Vector3 ZoomOffset = Vector3.zero;
-    [SerializeField]private float senstivityX = 5;
-    [SerializeField]private float senstivityY = 1;
-    [SerializeField]private float minY = 30;
-    [SerializeField]private float maxY = 50;
-    [SerializeField]private bool isZooming;
-    private float currentX = 0;
-    private float currentY = 1;
+    private Quaternion camRotation;
+    [SerializeField] private float Sensitivity;
+    private float clampangle = 80f;
+    
+    // Start is called before the first frame update
     void Start()
     {
+        camRotation = transform.localRotation;
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
+
+    // Update is called once per frame
     void Update()
     {
-        currentX += Input.GetAxisRaw("Mouse X");
-        currentY -= Input.GetAxisRaw("Mouse Y");
+        camRotation.x += Input.GetAxis("Mouse Y") * Sensitivity;
+        camRotation.y += Input.GetAxis("Mouse X") * Sensitivity;
 
-        currentX = Mathf.Repeat(currentX, 360);
-        currentY = Mathf.Clamp(currentY, minY, maxY);
+        camRotation.x = Mathf.Clamp(camRotation.x,-clampangle ,clampangle );
 
-        isZooming = Input.GetMouseButton(1);
+        transform.localRotation = Quaternion.Euler(camRotation.x, camRotation.y, camRotation.z);
     }
-    void LateUpdate()
-    {
-        Vector3 dist = isZooming? ZoomOffset : CamOffset;
-        Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
-        transform.position = targetTransform.position + rotation * dist;
-        transform.LookAt(targetTransform.position);
-        CheckWall();
-    }
-    [SerializeField]private LayerMask wallLayer;
-    void CheckWall()
-    {
-        RaycastHit hit;
-        Vector3 start = targetTransform.position;
-        Vector3 dir = transform.position - targetTransform.position;
-        float dist = CamOffset.z * -1;
-        Debug.DrawRay(targetTransform.position, dir, Color.green);
-        if(Physics.Raycast(targetTransform.position, dir, out hit, dist, wallLayer))
-        {
-            float hitDist = hit.distance;
-            Vector3 sphereCastCenter =  targetTransform.position + (dir.normalized * hitDist);
-            transform.position = sphereCastCenter;
-        }
-    }
-
 }

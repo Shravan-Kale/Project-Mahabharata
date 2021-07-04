@@ -96,12 +96,12 @@ public class CharacterMovement : MonoBehaviour
                                                                walkableLayerMask))
                           .Any(colliderInfo => colliderInfo))
             {
-                //Debug.Log("Wall run");
+                Debug.Log("Wall run");
                 rigidBody.useGravity = false;
             }
             else
             {
-                //Debug.Log("Don`t touch");
+                Debug.Log("Don`t touch");
                 rigidBody.useGravity = true;
             }
         }
@@ -150,7 +150,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        /*DrawGroundChecker();
+        DrawGroundChecker();
 
         void DrawGroundChecker()
         {
@@ -164,6 +164,5 @@ public class CharacterMovement : MonoBehaviour
                 Gizmos.DrawRay(transform.position, direction);
             }
         }
-        */
     }
 }
