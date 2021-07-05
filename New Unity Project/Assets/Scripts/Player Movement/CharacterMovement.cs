@@ -17,6 +17,12 @@ public class CharacterMovement : MonoBehaviour
     private float SmoothSpeed;
     private float rotationSpeed = 5f;
 
+
+    public float walkspeed = 5f;
+    public float runspeed = 10f;
+    public float crouchspeed = 5f;
+    public float pronespeed = 2f;
+
     private MovementMode movementMode;
 
     // Start is called before the first frame update
@@ -25,8 +31,10 @@ public class CharacterMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
     }
 
+    
+
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //transform.Translate(velocity.normalized*Speed*Time.deltaTime);
         
@@ -54,23 +62,23 @@ public class CharacterMovement : MonoBehaviour
         {
             case MovementMode.Walking:
                 {
-                    Speed = 5;
+                    Speed = walkspeed;
                     break;
                 }
                 
             case MovementMode.Running:
                 {
-                    Speed = 10;
+                    Speed = runspeed;
                     break;
                 }
             case MovementMode.Crouching:
                 {
-                    Speed = 4;
+                    Speed = crouchspeed;
                     break;
                 }
             case MovementMode.Proning:
                 {
-                    Speed = 2;
+                    Speed = pronespeed;
                     break;
                 }
             case MovementMode.Sprinting:

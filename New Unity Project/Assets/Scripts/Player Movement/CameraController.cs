@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         camRotation.x += Input.GetAxis("Mouse Y") * Sensitivity;
         camRotation.y += Input.GetAxis("Mouse X") * Sensitivity;

@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     private Vector3 velocity;
     public CameraController cameraController;
     public CharacterMovement characterMovement;
+    public PlayerAnimatorController playerAnimator;
 
 
     // Start is called before the first frame update
@@ -54,15 +55,31 @@ public class Character : MonoBehaviour
 
     }
 
-    public void TogglrRun()
+    public void TogglrRun(bool enable)
     {
-        if (characterMovement.GetMovementMode() != MovementMode.Walking)
+        if (enable)
         {
-            characterMovement.SetMovementMode(MovementMode.Walking);
+            characterMovement.SetMovementMode(MovementMode.Running);
+            playerAnimator.SetMovementMode(MovementMode.Running);
         }
         else
         {
-            characterMovement.SetMovementMode(MovementMode.Running);
+            characterMovement.SetMovementMode(MovementMode.Walking);
+            playerAnimator.SetMovementMode(MovementMode.Walking);
+        }
+    }
+
+    public void ToggleCrouch()
+    {
+        if (characterMovement.GetMovementMode() != MovementMode.Crouching)
+        {
+            characterMovement.SetMovementMode(MovementMode.Crouching);
+            playerAnimator.SetMovementMode(MovementMode.Crouching);
+        }
+        else
+        {
+            characterMovement.SetMovementMode(MovementMode.Walking);
+            playerAnimator.SetMovementMode(MovementMode.Walking);
         }
     }
 }
