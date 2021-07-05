@@ -12,6 +12,19 @@ public class Character : MonoBehaviour
     public CharacterMovement characterMovement;
     public PlayerAnimatorController playerAnimator;
 
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
     public void AddMovementInput(float forward , float right)
     {
         forwardInput = forward;
@@ -32,13 +45,13 @@ public class Character : MonoBehaviour
         {
             velocity = Vector3.zero;
         }
-        characterMovement.velocity = translation;
+        characterMovement.Velocity = translation;
     }
 
     public float getVelocity()
     {
         
-        return characterMovement.velocity.magnitude;
+        return characterMovement.Velocity.magnitude;
 
     }
 
