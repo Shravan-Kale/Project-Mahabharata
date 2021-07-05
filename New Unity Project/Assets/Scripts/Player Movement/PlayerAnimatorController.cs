@@ -6,31 +6,62 @@ using UnityEngine;
 
 public class PlayerAnimatorController : MonoBehaviour
 {
-    // TODO: remove serialize field
-    [SerializeField] private Animator playerAnimator;
+    public Animator playerAnimator;
     private Character character;
-    
-    // static variables
-    private static Animator _animator;
-    private static readonly int PickUp = Animator.StringToHash("PickUp");
-    private static readonly int Velocity = Animator.StringToHash("Velocity");
+    private float speed;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        _animator = playerAnimator;
         character = GetComponent<Character>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        _animator.SetFloat(Velocity, character.getVelocity());
+        if (playerAnimator == null)
+        {
+            Debug.Log("No Valid Player Animator");
+        }
+
+        speed = Mathf.SmoothStep(speed, character.getVelocity(), Time.deltaTime * 100);
+
+        playerAnimator.SetFloat("Velocity", speed);
     }
 
-    public static void InvokePickUpAnimation()
+    public void SetMovementMode(MovementMode mode)
     {
-        _animator.SetTrigger(PickUp);
+
+
+        switch (mode)
+        {
+            case MovementMode.Walking:
+                {
+                    playerAnimator.SetInteger("Movement-State", 0);
+                    break;
+                }
+
+            case MovementMode.Running:
+                {
+                    playerAnimator.SetInteger("Movement-State", 0);
+                    break;
+                }
+            case MovementMode.Crouching:
+                {
+                    playerAnimator.SetInteger("Movement-State", 1);
+                    break;
+                }
+            case MovementMode.Proning:
+                {
+                    playerAnimator.SetInteger("Movement-State", 2);
+                    break;
+                }
+            case MovementMode.Sprinting:
+                {
+                    playerAnimator.SetInteger("Movement-State", 3);
+                    break;
+                }
+        }
     }
 }
