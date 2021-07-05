@@ -6,62 +6,31 @@ using UnityEngine;
 
 public class PlayerAnimatorController : MonoBehaviour
 {
-    public Animator playerAnimator;
+    // TODO: remove serialize field
+    [SerializeField] private Animator playerAnimator;
     private Character character;
-    private float speed;
+    
+    // static variables
+    private static Animator _animator;
+    private static readonly int PickUp = Animator.StringToHash("PickUp");
+    private static readonly int Velocity = Animator.StringToHash("Velocity");
 
 
     // Start is called before the first frame update
     void Start()
     {
+        _animator = playerAnimator;
         character = GetComponent<Character>();
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        if (playerAnimator == null)
-        {
-            Debug.Log("No Valid Player Animator");
-        }
-
-        speed = Mathf.SmoothStep(speed, character.getVelocity(), Time.deltaTime * 100);
-
-        playerAnimator.SetFloat("Velocity", speed);
+        _animator.SetFloat(Velocity, character.getVelocity());
     }
 
-    public void SetMovementMode(MovementMode mode)
+    public static void InvokePickUpAnimation()
     {
-
-
-        switch (mode)
-        {
-            case MovementMode.Walking:
-                {
-                    playerAnimator.SetInteger("Movement-State", 0);
-                    break;
-                }
-
-            case MovementMode.Running:
-                {
-                    playerAnimator.SetInteger("Movement-State", 0);
-                    break;
-                }
-            case MovementMode.Crouching:
-                {
-                    playerAnimator.SetInteger("Movement-State", 1);
-                    break;
-                }
-            case MovementMode.Proning:
-                {
-                    playerAnimator.SetInteger("Movement-State", 2);
-                    break;
-                }
-            case MovementMode.Sprinting:
-                {
-                    playerAnimator.SetInteger("Movement-State", 3);
-                    break;
-                }
-        }
+        _animator.SetTrigger(PickUp);
     }
 }
