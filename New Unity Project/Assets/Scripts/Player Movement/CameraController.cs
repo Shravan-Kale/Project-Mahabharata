@@ -1,28 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private Quaternion camRotation;
-    [SerializeField] private float Sensitivity;
-    private float clampangle = 80f;
-    
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float distanceBehind;
+    [SerializeField] private float distanceAbove;
+    [SerializeField] private Vector3 lookOffset;
+
+    // local variables
+    private Transform _playerTransform;
+
+    private void Start()
     {
-        camRotation = transform.localRotation;
-        Cursor.lockState = CursorLockMode.Locked;
+        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        camRotation.x += Input.GetAxis("Mouse Y") * Sensitivity;
-        camRotation.y += Input.GetAxis("Mouse X") * Sensitivity;
+        transform.position = _playerTransform.position -
+                             (_playerTransform.forward * distanceBehind) +
+                             (_playerTransform.up * distanceAbove);
+        transform.LookAt(_playerTransform.position + lookOffset);
+    }
 
-        camRotation.x = Mathf.Clamp(camRotation.x,-clampangle ,clampangle );
-
-        transform.localRotation = Quaternion.Euler(camRotation.x, camRotation.y, camRotation.z);
+    private void OnDrawGizmos()
+    {
+        if (Application.isPlaying)
+            Gizmos.DrawSphere(_playerTransform.position -
+                              (_playerTransform.forward * distanceBehind) +
+                              (_playerTransform.up * distanceAbove),
+                              1f);
     }
 }
