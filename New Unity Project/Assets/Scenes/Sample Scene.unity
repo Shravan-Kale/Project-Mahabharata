@@ -1352,9 +1352,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583cee5cd3a0c57469958dbeed8fb3a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceBehind: 3.38
-  distanceAbove: 3.54
-  lookOffset: {x: 0, y: 0, z: 0}
+  distanceBehind: 4.54
+  distanceAbove: 3.74
+  lookOffset: {x: 0, y: 2.5, z: 0}
 --- !u!1 &1228249964 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100266, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
