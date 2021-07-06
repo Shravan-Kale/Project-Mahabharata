@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1478.8682, g: 1831.9521, b: 2425.4668, a: 1}
+  m_IndirectSpecularColor: {r: 1481.7754, g: 1835.8867, b: 2430.4492, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1264,8 +1264,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c89b1756498d9045b7ad06c7b285c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FootIK_Offset: {x: 0, y: 0.2, z: 0}
-  character: {fileID: 87146603}
+  anim: {fileID: 1298389490}
+  enableFeetIk: 1
+  heightFromGroundRaycast: 1.14
+  raycastDownDistance: 1.5
+  environmentLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  pelvisOffset: 0
+  pelvisUpAndDownSpeed: 0.28
+  feetToIkPositionSpeed: 0.5
+  showSolverDebug: 1
 --- !u!1001 &1303944138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2195,6 +2204,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: yuponicProtoTiles
       objectReference: {fileID: 0}
+    - target: {fileID: 100174, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100178, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100180, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100274, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100276, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100278, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100280, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2348,7 +2385,7 @@ GameObject:
   - component: {fileID: 2062327976}
   - component: {fileID: 2062327975}
   - component: {fileID: 2062327974}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
