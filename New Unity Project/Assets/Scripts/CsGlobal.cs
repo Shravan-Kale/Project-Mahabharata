@@ -13,6 +13,9 @@ public class CsGlobal : MonoBehaviour
     public static bool isPlayerMoving;
     public static bool isPressingE;
     public static bool isPressingQ;
+    public static float mouseYAxis;
+    public static float mouseXAxis;
+    public static float mouseWheelAxis;
 
     private void Awake()
     {
@@ -31,6 +34,10 @@ public class CsGlobal : MonoBehaviour
 
         horizontalRawAxis = Input.GetAxisRaw("Horizontal");
         verticalRawAxis = Input.GetAxisRaw("Vertical");
+
+        mouseYAxis = Input.GetAxis("Mouse Y");
+        mouseXAxis = Input.GetAxis("Mouse X");
+        mouseWheelAxis = Input.GetAxis("Mouse ScrollWheel");
 
         isPlayerMoving = horizontalRawAxis != 0 || verticalRawAxis != 0;
     }

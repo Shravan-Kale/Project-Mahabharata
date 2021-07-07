@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerInFrontRaycaster : MonoBehaviour
@@ -25,14 +26,13 @@ public class PlayerInFrontRaycaster : MonoBehaviour
 
         foreach (var raycastHit in _raycastInfo)
         {
-            _weapon = raycastHit.transform.GetComponent<Weapon>();
-            if (_weapon)
+            if (raycastHit.transform.CompareTag($"Weapon"))
             {
+                _weapon = raycastHit.transform.GetComponent<Weapon>();
                 _weapon.ShowText();
 
                 if (CsGlobal.isPressingE)
                 {
-                    Debug.Log("Pick up");
                     PlayerInventoryController.PickUp(_weapon);
                 }
             }

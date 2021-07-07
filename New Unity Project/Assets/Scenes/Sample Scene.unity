@@ -154,7 +154,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87146598}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.062, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1298389489}
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40cb5c892e753de418a332688ce7b20e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraController: {fileID: 1213211699}
+  cameraController: {fileID: 1437835448}
   characterMovement: {fileID: 87146603}
   playerAnimator: {fileID: 87146602}
 --- !u!114 &87146602
@@ -1028,7 +1028,7 @@ GameObject:
   - component: {fileID: 1159481014}
   m_Layer: 0
   m_Name: Weapon
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1153,10 +1153,9 @@ GameObject:
   - component: {fileID: 1213211698}
   - component: {fileID: 1213211697}
   - component: {fileID: 1213211696}
-  - component: {fileID: 1213211699}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1169,12 +1168,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1213211694}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.697, z: -4.6340003}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 1437835447}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 13.398, y: 0, z: 0}
 --- !u!114 &1213211696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1340,21 +1339,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &1213211699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1213211694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 583cee5cd3a0c57469958dbeed8fb3a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceBehind: 4.54
-  distanceAbove: 3.74
-  lookOffset: {x: 0, y: 2.5, z: 0}
 --- !u!1 &1228249964 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100266, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
@@ -1722,6 +1706,60 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300280, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
+--- !u!1 &1437835446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1437835447}
+  - component: {fileID: 1437835448}
+  m_Layer: 0
+  m_Name: CameraController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1437835447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437835446}
+  m_LocalRotation: {x: 0.11276085, y: -0.2543818, z: 0.029878158, w: 0.96004283}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1213211695}
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 13.398, y: -29.681, z: 0}
+--- !u!114 &1437835448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437835446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 583cee5cd3a0c57469958dbeed8fb3a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensitivity: 1
+  scrollSensitivity: 5
+  yOffset: 3
+  zoomDefault: 3
+  zoomMax: 7
+  zoomMin: 2
+  collisionSensitivity: 2
+  characterCollisionSensitivity: 2
+  maxXAngle: 80
+  minXAngle: -50
 --- !u!1 &1462192584 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100308, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
