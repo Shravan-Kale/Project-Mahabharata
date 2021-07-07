@@ -92,7 +92,6 @@ public class CameraController : MonoBehaviour
                                  new Vector3(0, 0, collisionSensitivity),
                                  out _hitInfo))
             {
-                _camera.transform.position = _hitInfo.point;
                 _camera.transform.position =
                     _hitInfo.point + new Vector3(0, 0, collisionSensitivity);
             }
