@@ -60,17 +60,25 @@ public class Weapon : MonoBehaviour
     public void PickUp(Transform weaponContainerTransform)
     {
         transform.position = weaponContainerTransform.position;
+        transform.rotation = weaponContainerTransform.rotation;
         transform.SetParent(weaponContainerTransform);
-        _rb.useGravity = false;
-        _collider.enabled = false;
+        
+        ChangeComponentActive(false);
     }
 
     public void Drop(Vector3 dropForce)
     {
         transform.parent = null;
-        _rb.useGravity = true;
-        _collider.enabled = true;
+        
+        ChangeComponentActive(true);
         _rb.AddForce(dropForce);
+    }
+
+    private void ChangeComponentActive(bool isActive)
+    {
+        _rb.detectCollisions = isActive;
+        _rb.useGravity = isActive;
+        _collider.enabled = isActive;
     }
 
     private void OnDrawGizmos()

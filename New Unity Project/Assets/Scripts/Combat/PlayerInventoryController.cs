@@ -11,18 +11,19 @@ using UnityEngine;
 
 public class PlayerInventoryController : MonoBehaviour
 {
-    [SerializeField] private GameObject weaponHandContainerGOSerialization;
+    [SerializeField] private GameObject swordHandContainerGOSerialization;
     [SerializeField] private float dropForce = 100f;
 
     // public static variables
-    private static Weapon[] _itemsInHands = new Weapon[2]; // 0 - hand, 1 - back
+    public static Weapon[] _itemsInHands = new Weapon[2]; // 0 - hand, 1 - back
+    public static bool isBareHanded = true;
 
     // private static variables
-    private static GameObject _weaponHandContainerGO;
+    private static GameObject _swordHandContainerGO;
     
     private void Awake()
     {
-        _weaponHandContainerGO = weaponHandContainerGOSerialization;
+        _swordHandContainerGO = swordHandContainerGOSerialization;
     }
 
     private void Update()
@@ -36,17 +37,20 @@ public class PlayerInventoryController : MonoBehaviour
         if (_itemsInHands[0] == null)
         {
             // TODO: invoke pickup animation
-            _weapon.PickUp(_weaponHandContainerGO.transform);
+            _weapon.PickUp(_swordHandContainerGO.transform);
             _itemsInHands[0] = _weapon;
+            isBareHanded = false;
         }
     }
 
     public void Drop()
     {
+        // TODO: drops in wrong direction
         if (_itemsInHands[0] != null)
         {
             _itemsInHands[0].Drop((transform.position + transform.forward) * dropForce);
             _itemsInHands[0] = null;
+            isBareHanded = true;
             // TODO: invoke drop animation
         }
     }
