@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class WeaponController : MonoBehaviour
 {
     [SerializeField] public GameObject textPrefabGO;
     [SerializeField] private float time2DeactivateText = 0.1f;
@@ -21,14 +21,11 @@ public class Weapon : MonoBehaviour
     private Transform _camera;
     private float _currentTime = 0;
     private GameObject _currentTextGO;
-    private Collider _collider;
-    private Rigidbody _rb;
+
 
     private void Awake()
     {
         _camera = FindObjectOfType<Camera>().transform;
-        _collider = transform.GetComponent<Collider>();
-        _rb = transform.GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -55,30 +52,6 @@ public class Weapon : MonoBehaviour
         }
         
         _currentTextGO.transform.LookAt(_camera);
-    }
-    
-    public void PickUp(Transform weaponContainerTransform)
-    {
-        transform.position = weaponContainerTransform.position;
-        transform.rotation = weaponContainerTransform.rotation;
-        transform.SetParent(weaponContainerTransform);
-        
-        ChangeComponentActive(false);
-    }
-
-    public void Drop(Vector3 dropForce)
-    {
-        transform.parent = null;
-        
-        ChangeComponentActive(true);
-        _rb.AddForce(dropForce);
-    }
-
-    private void ChangeComponentActive(bool isActive)
-    {
-        _rb.detectCollisions = isActive;
-        _rb.useGravity = isActive;
-        _collider.enabled = isActive;
     }
 
     private void OnDrawGizmos()

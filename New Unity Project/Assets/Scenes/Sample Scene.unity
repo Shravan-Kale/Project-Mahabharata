@@ -490,6 +490,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.14390329, y: 0.3459773, z: 1.955021}
   m_Center: {x: 3.5948286e-11, y: 0, z: 0.012414337}
+--- !u!114 &206409778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206409773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534450ad5d01c7f45b9128ec495817b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attackSpeed: 0
+  animationTriggerName: Sword
 --- !u!1 &217220549 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100344, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
@@ -3015,7 +3030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 866f925d82acd2141b3ba72b74259e3a, type: 3}
       propertyPath: m_Name
-      value: Heavy_Full_Metal_Sword
+      value: Sword
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 866f925d82acd2141b3ba72b74259e3a, type: 3}
       propertyPath: m_TagString

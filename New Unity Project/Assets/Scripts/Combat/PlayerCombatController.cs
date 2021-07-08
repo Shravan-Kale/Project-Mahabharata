@@ -15,6 +15,9 @@ public class PlayerCombatController : MonoBehaviour
     private Transform _playerTransform;
     private RaycastHit _raycastHit;
     private bool canAttack = true;
+    private WeaponUtilities _weapon;
+    private float damage2Deal;
+    private float currenAttackCD;
 
     private void Awake()
     {
@@ -26,8 +29,21 @@ public class PlayerCombatController : MonoBehaviour
     {
         if (canAttack == false)
             return;
-        
-        PlayerAnimatorController.TriggerAttackAnimation();
+
+        if (PlayerInventoryController.isBareHanded)
+        {
+            PlayerAnimatorController.playerAnimator.Play("Punching");
+            damage2Deal = handDamage;
+            currenAttackCD = attackSpeed;
+        }
+        else
+        {
+            PlayerInventoryController._itemsInHands[0].InvokeAttackAnimation();
+            _weapon = PlayerInventoryController._itemsInHands[0]
+                                               .GetComponent<WeaponUtilities>();
+            damage2Deal = _weapon.damage;
+            damage2Deal = _weapon.attackSpeed;
+        }
 
         if (Physics.Raycast(_playerTransform.position + attackOffset,
                             _playerTransform.forward,
@@ -36,20 +52,19 @@ public class PlayerCombatController : MonoBehaviour
         {
             if (_raycastHit.collider.CompareTag("Enemy"))
             {
-                if (PlayerInventoryController.isBareHanded)
-                {
-                    _raycastHit.transform.GetComponent<EnemyHealth>().GetDamage(handDamage);
-                }
+                _raycastHit.transform.GetComponent<EnemyHealth>().GetDamage(damage2Deal);
             }
         }
-        
-        StartCoroutine(AttackCD());
 
+        StartCoroutine(AttackCD(currenAttackCD));
 
-        IEnumerator AttackCD()
+        IEnumerator AttackCD(float time2Wait)
         {
+            if (time2Wait == 0)
+                Debug.LogError("ERROR");
+            
             canAttack = false;
-            yield return new WaitForSeconds(1f / attackSpeed);
+            yield return new WaitForSeconds(1f / time2Wait);
             canAttack = true;
         }
     }

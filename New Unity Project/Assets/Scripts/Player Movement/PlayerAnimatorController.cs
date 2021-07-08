@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Character))]
 public class PlayerAnimatorController : MonoBehaviour
 {
-    private static Animator playerAnimator;
+    public static Animator playerAnimator;
     private Character character;
     private float speed;
     private static readonly int IsAttacking = Animator.StringToHash("isAttacking");

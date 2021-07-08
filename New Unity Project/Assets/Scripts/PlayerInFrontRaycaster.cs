@@ -11,7 +11,7 @@ public class PlayerInFrontRaycaster : MonoBehaviour
     // local variables
     private Camera _camera;
     private RaycastHit[] _raycastInfo;
-    private Weapon _weapon;
+    private WeaponController _weaponController;
 
     private void Awake()
     {
@@ -28,12 +28,12 @@ public class PlayerInFrontRaycaster : MonoBehaviour
         {
             if (raycastHit.transform.CompareTag($"Weapon"))
             {
-                _weapon = raycastHit.transform.GetComponent<Weapon>();
-                _weapon.ShowText();
+                _weaponController = raycastHit.transform.GetComponent<WeaponController>();
+                _weaponController.ShowText();
 
                 if (CsGlobal.isPressingE)
                 {
-                    PlayerInventoryController.PickUp(_weapon);
+                    PlayerInventoryController.PickUp(raycastHit.transform.GetComponent<WeaponUtilities>());
                 }
             }
         }

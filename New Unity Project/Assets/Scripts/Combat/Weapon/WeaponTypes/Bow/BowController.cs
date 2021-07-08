@@ -8,6 +8,7 @@ public class BowController : WeaponUtilities
 {
     [SerializeField] private GameObject arrowPrefab; // TODO: load from resources
     [SerializeField] private float arrowForce = 10f;
+    [SerializeField] private float offset;
 
     // line renderer
     [Space] [SerializeField] private LineRenderer _lineRenderer;
@@ -68,4 +69,14 @@ public class BowController : WeaponUtilities
     }
 
 #endregion
+
+    private Vector3 CalculateFirePoint()
+    {
+        return transform.position + transform.forward * offset;
+    }
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position + transform.forward * offset, 0.1f);
+    }
 }

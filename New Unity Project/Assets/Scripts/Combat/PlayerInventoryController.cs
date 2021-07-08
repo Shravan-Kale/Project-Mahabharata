@@ -15,7 +15,7 @@ public class PlayerInventoryController : MonoBehaviour
     [SerializeField] private float dropForce = 100f;
 
     // public static variables
-    public static Weapon[] _itemsInHands = new Weapon[2]; // 0 - hand, 1 - back
+    public static WeaponUtilities[] _itemsInHands = new WeaponUtilities[2]; // 0 - hand, 1 - back
     public static bool isBareHanded = true;
 
     // private static variables
@@ -32,13 +32,13 @@ public class PlayerInventoryController : MonoBehaviour
             Drop();
     }
 
-    public static void PickUp(Weapon _weapon)
+    public static void PickUp(WeaponUtilities weaponUtils)
     {
         if (_itemsInHands[0] == null)
         {
             // TODO: invoke pickup animation
-            _weapon.PickUp(_swordHandContainerGO.transform);
-            _itemsInHands[0] = _weapon;
+            weaponUtils.PickUp(_swordHandContainerGO.transform);
+            _itemsInHands[0] = weaponUtils;
             isBareHanded = false;
         }
     }

@@ -5,19 +5,47 @@ using UnityEngine;
 
 public class WeaponUtilities : MonoBehaviour
 {
-    [SerializeField] private float offset;
+    [SerializeField] public float damage;
+    [SerializeField] public float attackSpeed;
+    [Space][SerializeField] public string animationStateName;
+    
+    // internal variables
+    internal Collider _collider;
+    internal Rigidbody _rb;
 
-    protected Vector3 CalculateFirePoint()
+    public void InvokeAttackAnimation()
     {
-        return transform.position + transform.forward * offset;
+        PlayerAnimatorController.playerAnimator.Play(animationStateName);
+    }
+    
+    public void SetUpUtils()
+    {
+        _collider = transform.GetComponent<Collider>();
+        _rb = transform.GetComponent<Rigidbody>();
+    }
+    
+    public void PickUp(Transform weaponContainerTransform)
+    {
+        transform.position = weaponContainerTransform.position;
+        transform.rotation = weaponContainerTransform.rotation;
+        transform.SetParent(weaponContainerTransform);
+        
+        ChangeComponentActive(false);
     }
 
-#region Gizmos
-
-    private void OnDrawGizmos()
+    public void Drop(Vector3 dropForce)
     {
-        Gizmos.DrawSphere(transform.position + transform.forward * offset, 0.1f);
+        transform.parent = null;
+        
+        ChangeComponentActive(true);
+        _rb.AddForce(dropForce);
     }
 
-#endregion
+    private void ChangeComponentActive(bool isActive)
+    {
+        _rb.detectCollisions = isActive;
+        _rb.useGravity = isActive;
+        _collider.enabled = isActive;
+        
+    }
 }
