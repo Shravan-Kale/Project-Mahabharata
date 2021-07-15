@@ -7,6 +7,6 @@ public class ArrowController : MonoBehaviour
 {
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("collision");
+        Destroy(gameObject);
     }
 }

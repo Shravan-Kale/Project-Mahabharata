@@ -472,7 +472,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 88396856}
         m_TargetAssemblyTypeName: BowController, Assembly-CSharp
-        m_MethodName: OnClick
+        m_MethodName: Shoot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

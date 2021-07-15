@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class CsGlobal : MonoBehaviour
 {
     [SerializeField] private UnityEvent onLeftClick;
+    [SerializeField] private UnityEvent leftMouseUp;
 
     public static float horizontalRawAxis;
     public static float verticalRawAxis;
@@ -20,14 +21,20 @@ public class CsGlobal : MonoBehaviour
     private void Awake()
     {
         onLeftClick ??= new UnityEvent();
+        
         if (onLeftClick == null)
             onLeftClick = new UnityEvent();
+        if (leftMouseUp == null)
+            leftMouseUp = new UnityEvent();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
             onLeftClick.Invoke();
+        
+        if (Input.GetButtonUp("Fire1"))
+            leftMouseUp.Invoke();
 
         isPressingE = Input.GetKeyDown(KeyCode.E);
         isPressingQ = Input.GetKeyDown(KeyCode.Q);

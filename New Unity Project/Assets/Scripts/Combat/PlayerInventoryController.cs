@@ -11,7 +11,6 @@ using UnityEngine;
 
 public class PlayerInventoryController : MonoBehaviour
 {
-    [SerializeField] private GameObject swordHandContainerGOSerialization;
     [SerializeField] private float dropForce = 100f;
 
     // public static variables
@@ -19,13 +18,8 @@ public class PlayerInventoryController : MonoBehaviour
     public static bool isBareHanded = true;
 
     // private static variables
-    private static GameObject _swordHandContainerGO;
+    private static GameObject _weaponContainerGO;
     
-    private void Awake()
-    {
-        _swordHandContainerGO = swordHandContainerGOSerialization;
-    }
-
     private void Update()
     {
         if (CsGlobal.isPressingQ)
@@ -37,7 +31,8 @@ public class PlayerInventoryController : MonoBehaviour
         if (_itemsInHands[0] == null)
         {
             // TODO: invoke pickup animation
-            weaponUtils.PickUp(_swordHandContainerGO.transform);
+            _weaponContainerGO = weaponUtils.weaponContainer;
+            weaponUtils.PickUp(_weaponContainerGO.transform);
             _itemsInHands[0] = weaponUtils;
             isBareHanded = false;
         }
