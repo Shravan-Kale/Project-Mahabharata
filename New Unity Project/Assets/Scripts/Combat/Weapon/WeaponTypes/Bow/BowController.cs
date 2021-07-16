@@ -9,7 +9,6 @@ using Random = UnityEngine.Random;
 public class BowController : WeaponUtilities
 {
     [Space] [SerializeField] private GameObject arrowPrefab; // TODO: load from resources
-    [SerializeField] private float offset;
 
     [Space] [SerializeField] private float forceIncrease = 1f;
     [SerializeField] private float maxForce = 20f;
@@ -23,8 +22,6 @@ public class BowController : WeaponUtilities
     [SerializeField] private float collideRadius = 1f; // works with collidableLayers
 
     [Space] [SerializeField] private string recoilState;
-    [SerializeField] private GameObject _TEST;
-    [SerializeField] private GameObject _TEST2;
 
     // local variables
     // Instantiate arrow
@@ -40,6 +37,7 @@ public class BowController : WeaponUtilities
 
     private IEnumerator _shootCoroutine;
     private Transform _firePointTransform;
+    private Vector3 _currentRotation;
 
     private void Awake()
     {
@@ -52,7 +50,6 @@ public class BowController : WeaponUtilities
     {
         _firePoint = CalculateFirePoint();
         DrawTrajectory();
-        Debug.Log(_TEST2.transform.forward);
     }
 
 #region DrawTrajectory
@@ -74,7 +71,7 @@ public class BowController : WeaponUtilities
 
         _lineRenderer.positionCount = numPoints;
         _points = new List<Vector3>();
-        _startingVelocity = _firePoint + _TEST2.transform.forward * _currentForce;
+        _startingVelocity = _firePoint + _firePointTransform.forward * _currentForce;
 
         for (float i = 0; i < numPoints; i += timeBetweenPoints)
         {
@@ -126,11 +123,14 @@ public class BowController : WeaponUtilities
 
     private Vector3 CalculateFirePoint()
     {
-        return _TEST.transform.position;
+        return _firePointTransform.position;
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(_firePoint + _TEST.transform.forward * _currentForce, 0.1f);
+        if (Application.isPlaying == false)
+            return;
+        
+        Gizmos.DrawSphere(_firePoint + _firePointTransform.forward * _currentForce, 0.1f);
     }
 }

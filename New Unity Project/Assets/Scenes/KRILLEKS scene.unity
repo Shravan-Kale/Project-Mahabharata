@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 1478.846, g: 1831.9392, b: 2425.4006, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -912,13 +912,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  attackSpeed: 2
+  attackSpeed: 0.5
   weaponType: 1
   weaponContainer: {fileID: 193672928}
-  animationStateName: 
+  animationStateName: standing aim overdraw
   arrowPrefab: {fileID: 7122494100823247631, guid: 59cc8d38a1460c641a681337b5d824f4, type: 3}
   offset: 2
-  forceIncrease: 1
+  forceIncrease: 5
   maxForce: 20
   forceUpdateFrequency: 20
   _lineRenderer: {fileID: 799578993}
@@ -928,6 +928,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   collideRadius: 1
+  recoilState: standing aim recoil
+  _TEST: {fileID: 1847933375}
+  _TEST2: {fileID: 1298389488}
 --- !u!54 &799578995
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -973,6 +976,11 @@ MonoBehaviour:
   time2DeactivateText: 0.1
   textInstantiateOffset: {x: 0, y: 0.91, z: 0}
   gizmosSphereRadius: 0.1
+--- !u!4 &799578998 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400002, guid: 3e47c6dc83c6eaa42b8bf5fbaf192188, type: 3}
+  m_PrefabInstance: {fileID: 1180246568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &808365698 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: a19adda8991b2484090c28c5a4814127, type: 3}
@@ -1568,6 +1576,23 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300264, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
+--- !u!1 &1253317976 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 3e47c6dc83c6eaa42b8bf5fbaf192188, type: 3}
+  m_PrefabInstance: {fileID: 1180246568}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1253317980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253317976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3e6fa7a84f41ee44811c59b90ebff55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1258309474 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100216, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
@@ -2748,6 +2773,36 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300286, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
+--- !u!1 &1847933375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1847933376}
+  m_Layer: 0
+  m_Name: Fire point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1847933376
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847933375}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.56, y: -0.09, z: -0.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 799578998}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1860574842
 GameObject:
   m_ObjectHideFlags: 0

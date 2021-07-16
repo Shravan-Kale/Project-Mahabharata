@@ -19,6 +19,7 @@ public class PlayerCombatController : MonoBehaviour
     private float damage2Deal;
     private float currenAttackCD;
     private BowController bowController;
+    private bool isShootingCoroutineStarted = false;
 
     private void Awake()
     {
@@ -56,6 +57,7 @@ public class PlayerCombatController : MonoBehaviour
             {
                 bowController = _weapon.GetComponent<BowController>();
                 bowController.StartShootCoroutine();
+                isShootingCoroutineStarted = true;
                 PlayerAnimatorController.playerAnimator.Play(bowController.animationStateName);
             }
         }
@@ -77,12 +79,13 @@ public class PlayerCombatController : MonoBehaviour
     // invoke on button up
     public void BowShot()
     {
-        if (canAttack == false)
+        if (canAttack == false || isShootingCoroutineStarted == false)
             return;
         
         if (_weapon.weaponType == WeaponUtilities.WeaponTypes.bow)
         {
             bowController.Shoot();
+            isShootingCoroutineStarted = false;
             StartCoroutine(AttackCD(currenAttackCD));
         }
     }
