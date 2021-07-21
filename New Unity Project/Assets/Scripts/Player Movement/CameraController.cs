@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -15,6 +16,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float characterCollisionSensitivity = 1f;
     [Space] [SerializeField] private float maxXAngle = 80f;
     [SerializeField] private float minXAngle = 50f;
+    [Space] [SerializeField] private float lookAtTargetSpeed = 1;
 
     // local variables
     private GameObject _character;
@@ -26,7 +28,12 @@ public class CameraController : MonoBehaviour
     private float _scrollAmount;
     private Vector3 _CollisionPoint;
     private RaycastHit _hitInfo;
-    private Vector3 rotation;
+
+    private Vector3 _rotation;
+
+    // for target focusing
+    private Vector3 _direction;
+    private Quaternion _2Rotation;
 
     private void Awake()
     {
@@ -74,7 +81,11 @@ public class CameraController : MonoBehaviour
 
         void LookAtTarget()
         {
-            _cameraController.transform.LookAt(EnemySelector._closestEnemy.transform);
+//            _cameraController.transform.LookAt(EnemySelector._closestEnemy.transform);
+            _direction = EnemySelector._closestEnemy.transform.position - transform.position;
+            _2Rotation = Quaternion.LookRotation(_direction);
+            transform.rotation =
+                Quaternion.Lerp(transform.rotation, _2Rotation, lookAtTargetSpeed * Time.deltaTime);
         }
 
         void ChangeZoom()
@@ -112,16 +123,17 @@ public class CameraController : MonoBehaviour
 
         void RestrictRotation()
         {
-            rotation = UnityEditor.TransformUtils.GetInspectorRotation(_cameraController.transform);
+            _rotation =
+                UnityEditor.TransformUtils.GetInspectorRotation(_cameraController.transform);
 
-            if (rotation.x > maxXAngle ||
-                rotation.x < minXAngle)
+            if (_rotation.x > maxXAngle ||
+                _rotation.x < minXAngle)
             {
                 UnityEditor.TransformUtils.SetInspectorRotation(
                     _cameraController.transform,
-                    new Vector3(Mathf.Clamp(rotation.x, minXAngle, maxXAngle),
-                                rotation.y,
-                                rotation.z));
+                    new Vector3(Mathf.Clamp(_rotation.x, minXAngle, maxXAngle),
+                                _rotation.y,
+                                _rotation.z));
             }
         }
     }

@@ -11,7 +11,11 @@ public class EnemySelector : MonoBehaviour
     private List<GameObject> _enemies;
     private float _distance = 0;
     private float _currentDistance;
-    
+    private Renderer _renderer;
+    private bool _anyEnemyInView;
+    private Camera _camera;
+    private Plane[] _planes;
+
     // public static variables
     public static bool isTargetSelected = false;
     public static GameObject _closestEnemy;
@@ -20,33 +24,58 @@ public class EnemySelector : MonoBehaviour
     {
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         _enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList();
-    }
-
-    private void Update()
-    {
-        Debug.Log(_closestEnemy);
+        _camera = FindObjectOfType<Camera>();
     }
 
     public void SelectEnemy()
     {
         isTargetSelected = isTargetSelected == false;
-        
+
         if (isTargetSelected == false)
             return;
-        
-        CalculateClosestEnemy();
+
+        if (CalculateClosestEnemyInView() == false)
+            CalculateClosestEnemy();
     }
-     
+
+    private bool CalculateClosestEnemyInView()
+    {
+        _anyEnemyInView = false;
+
+        _planes = GeometryUtility.CalculateFrustumPlanes(_camera);
+        
+        foreach (var enemy in _enemies)
+        {
+            _renderer = enemy.GetComponent<Renderer>();
+
+            if (GeometryUtility.TestPlanesAABB(_planes,_renderer.bounds))
+            {
+                GetDistance(enemy);
+                _anyEnemyInView = true;
+            }
+        }
+
+        return _anyEnemyInView;
+    }
+
     private void CalculateClosestEnemy()
     {
         foreach (var enemy in _enemies)
         {
-            _currentDistance = Vector3.Distance(_playerTransform.position, enemy.transform.position);
-            if (_currentDistance < _distance || _distance == 0)
-            {
-                _distance = _currentDistance;
-                _closestEnemy = enemy;
-            }
+            _currentDistance =
+                Vector3.Distance(_playerTransform.position, enemy.transform.position);
+
+            GetDistance(enemy);
+        }
+    }
+
+    private void GetDistance(GameObject enemy)
+    {
+        if (_currentDistance < _distance ||
+            _distance == 0)
+        {
+            _distance = _currentDistance;
+            _closestEnemy = enemy;
         }
     }
 }
