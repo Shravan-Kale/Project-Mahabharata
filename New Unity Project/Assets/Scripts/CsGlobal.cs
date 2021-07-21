@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class CsGlobal : MonoBehaviour
 {
     [SerializeField] private UnityEvent onLeftClick;
     [SerializeField] private UnityEvent leftMouseUp;
+    [SerializeField] private UnityEvent XButtonClick;
 
     public static float horizontalRawAxis;
     public static float verticalRawAxis;
@@ -21,11 +23,8 @@ public class CsGlobal : MonoBehaviour
     private void Awake()
     {
         onLeftClick ??= new UnityEvent();
-        
-        if (onLeftClick == null)
-            onLeftClick = new UnityEvent();
-        if (leftMouseUp == null)
-            leftMouseUp = new UnityEvent();
+        leftMouseUp ??= new UnityEvent();
+        XButtonClick ??= new UnityEvent();
     }
 
     private void Update()
@@ -35,6 +34,9 @@ public class CsGlobal : MonoBehaviour
         
         if (Input.GetButtonUp("Fire1"))
             leftMouseUp.Invoke();
+
+        if (Input.GetKeyDown(KeyCode.X))
+            XButtonClick.Invoke();
 
         isPressingE = Input.GetKeyDown(KeyCode.E);
         isPressingQ = Input.GetKeyDown(KeyCode.Q);

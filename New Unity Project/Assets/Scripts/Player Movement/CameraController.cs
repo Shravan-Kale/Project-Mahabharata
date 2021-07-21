@@ -45,7 +45,10 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         ChangePosition();
-        ChangeRotation();
+        if (EnemySelector.isTargetSelected == false)
+            ChangeRotation();
+        else
+            LookAtTarget();
         ChangeZoom();
         CheckCollision();
         RestrictRotation();
@@ -67,6 +70,11 @@ public class CameraController : MonoBehaviour
                                  _cameraController.transform.rotation.eulerAngles.y +
                                  CsGlobal.mouseXAxis * sensitivity,
                                  _cameraController.transform.rotation.eulerAngles.z);
+        }
+
+        void LookAtTarget()
+        {
+            _cameraController.transform.LookAt(EnemySelector._closestEnemy.transform);
         }
 
         void ChangeZoom()
