@@ -41,6 +41,7 @@ public class EnemySelector : MonoBehaviour
     private bool CalculateClosestEnemyInView()
     {
         _anyEnemyInView = false;
+        _distance = 0;
 
         _planes = GeometryUtility.CalculateFrustumPlanes(_camera);
         
@@ -62,20 +63,21 @@ public class EnemySelector : MonoBehaviour
     {
         foreach (var enemy in _enemies)
         {
-            _currentDistance =
-                Vector3.Distance(_playerTransform.position, enemy.transform.position);
-
             GetDistance(enemy);
         }
     }
 
     private void GetDistance(GameObject enemy)
     {
+        _currentDistance =
+            Vector3.Distance(_playerTransform.position, enemy.transform.position);
+        
         if (_currentDistance < _distance ||
             _distance == 0)
         {
             _distance = _currentDistance;
             _closestEnemy = enemy;
+            Debug.Log(enemy.name + " " + _distance);
         }
     }
 }
