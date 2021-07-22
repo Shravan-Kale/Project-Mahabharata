@@ -10,6 +10,7 @@ public class CsGlobal : MonoBehaviour
     [SerializeField] private UnityEvent onLeftClick;
     [SerializeField] private UnityEvent leftMouseUp;
     [SerializeField] private UnityEvent XButtonClick;
+    [SerializeField] private UnityEvent ZButtonClick;
 
     public static float horizontalRawAxis;
     public static float verticalRawAxis;
@@ -25,6 +26,7 @@ public class CsGlobal : MonoBehaviour
         onLeftClick ??= new UnityEvent();
         leftMouseUp ??= new UnityEvent();
         XButtonClick ??= new UnityEvent();
+        ZButtonClick ??= new UnityEvent();
     }
 
     private void Update()
@@ -37,6 +39,9 @@ public class CsGlobal : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X))
             XButtonClick.Invoke();
+        
+        if (Input.GetKeyDown(KeyCode.Z))
+            ZButtonClick.Invoke();
 
         isPressingE = Input.GetKeyDown(KeyCode.E);
         isPressingQ = Input.GetKeyDown(KeyCode.Q);

@@ -15,6 +15,7 @@ public class EnemySelector : MonoBehaviour
     private bool _anyEnemyInView;
     private Camera _camera;
     private Plane[] _planes;
+    private List<GameObject> _selectedEnemies = new List<GameObject>();
 
     // public static variables
     public static bool isTargetSelected = false;
@@ -38,18 +39,34 @@ public class EnemySelector : MonoBehaviour
             CalculateClosestEnemy();
     }
 
-    private bool CalculateClosestEnemyInView()
+    public void SelectAnotherEnemy()
+    {
+        if (isTargetSelected == false)
+            return;
+
+        _selectedEnemies.Add(_closestEnemy);
+        if (_selectedEnemies.Count == _enemies.Count)
+            _selectedEnemies.RemoveAt(0);
+
+        if (CalculateClosestEnemyInView(true) == false)
+            CalculateClosestEnemy(true);
+    }
+
+    private bool CalculateClosestEnemyInView(bool nextEnemy = false)
     {
         _anyEnemyInView = false;
         _distance = 0;
 
         _planes = GeometryUtility.CalculateFrustumPlanes(_camera);
-        
+
         foreach (var enemy in _enemies)
         {
+            if (nextEnemy && CheckNextEnemy(enemy))
+                continue;
+
             _renderer = enemy.GetComponent<Renderer>();
 
-            if (GeometryUtility.TestPlanesAABB(_planes,_renderer.bounds))
+            if (GeometryUtility.TestPlanesAABB(_planes, _renderer.bounds))
             {
                 GetDistance(enemy);
                 _anyEnemyInView = true;
@@ -59,10 +76,13 @@ public class EnemySelector : MonoBehaviour
         return _anyEnemyInView;
     }
 
-    private void CalculateClosestEnemy()
+    private void CalculateClosestEnemy(bool nextEnemy = false)
     {
         foreach (var enemy in _enemies)
         {
+            if (nextEnemy && CheckNextEnemy(enemy))
+                continue;
+            
             GetDistance(enemy);
         }
     }
@@ -71,13 +91,25 @@ public class EnemySelector : MonoBehaviour
     {
         _currentDistance =
             Vector3.Distance(_playerTransform.position, enemy.transform.position);
-        
+
         if (_currentDistance < _distance ||
             _distance == 0)
         {
             _distance = _currentDistance;
             _closestEnemy = enemy;
-            Debug.Log(enemy.name + " " + _distance);
         }
+    }
+
+    private bool CheckNextEnemy(GameObject enemy)
+    {
+        foreach (var selectedEnemy in _selectedEnemies)
+        {
+            if (enemy == selectedEnemy)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
