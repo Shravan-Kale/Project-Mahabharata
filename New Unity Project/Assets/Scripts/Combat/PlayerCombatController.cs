@@ -14,12 +14,12 @@ public class PlayerCombatController : MonoBehaviour
     // local variables
     private Transform _playerTransform;
     private RaycastHit _raycastHit;
-    private bool canAttack = true;
+    private bool _canAttack = true;
     private WeaponUtilities _weapon;
-    private float damage2Deal;
-    private float currenAttackCD;
-    private BowController bowController;
-    private bool isShootingCoroutineStarted = false;
+    private float _damage2Deal;
+    private float _currenAttackCd;
+    private BowController _bowController;
+    private bool _isShootingCoroutineStarted = false;
 
     private void Awake()
     {
@@ -29,77 +29,91 @@ public class PlayerCombatController : MonoBehaviour
     // invoke on left click
     public void Attack()
     {
-        if (canAttack == false)
+        if (_canAttack == false)
             return;
 
         if (PlayerInventoryController.isBareHanded)
         {
             PlayerAnimatorController.playerAnimator.Play("Punching");
-            damage2Deal = handDamage;
-            currenAttackCD = attackSpeed;
+            _damage2Deal = handDamage;
+            _currenAttackCd = attackSpeed;
         }
         else
         {
             _weapon = PlayerInventoryController._itemsInHands[0]
-                                               .GetComponent<WeaponUtilities>();
-            damage2Deal = _weapon.damage;
-            currenAttackCD = _weapon.attackSpeed;
-
+                .GetComponent<WeaponUtilities>();
+            
             if (_weapon.weaponType == WeaponUtilities.WeaponTypes.melee)
             {
                 PlayerInventoryController._itemsInHands[0].InvokeAttackAnimation();
-                
-                doMeleeDamage();
-                
-                StartCoroutine(AttackCD(currenAttackCD));
+
+                SetUpWeapon();
+                DoMeleeDamage();
+
+                StartCoroutine(AttackCD(_currenAttackCd));
             }
             else if (_weapon.weaponType == WeaponUtilities.WeaponTypes.bow)
             {
-                bowController = _weapon.GetComponent<BowController>();
-                bowController.StartShootCoroutine();
-                isShootingCoroutineStarted = true;
-                PlayerAnimatorController.playerAnimator.Play(bowController.animationStateName);
+                SetUpWeapon();
+                
+                DoBowDamage();
             }
         }
-        void doMeleeDamage()
+
+        void SetUpWeapon()
+        {
+            _damage2Deal = _weapon.weaponComboStatsArray[_weapon.currentComboIndex].damage;
+            _currenAttackCd = _weapon.weaponComboStatsArray[_weapon.currentComboIndex].attackSpeed;
+        }
+        
+        void DoMeleeDamage()
         {
             if (Physics.Raycast(_playerTransform.position + attackOffset,
-                                _playerTransform.forward,
-                                out _raycastHit,
-                                attackDistance))
+                _playerTransform.forward,
+                out _raycastHit,
+                attackDistance))
             {
                 if (_raycastHit.collider.CompareTag("Enemy"))
                 {
-                    _raycastHit.transform.GetComponent<EnemyHealth>().GetDamage(damage2Deal);
+                    _raycastHit.transform.GetComponent<EnemyHealth>().GetDamage(_damage2Deal);
                 }
             }
+        }
+
+        void DoBowDamage()
+        {
+            _bowController = _weapon.GetComponent<BowController>();
+            _bowController.StartShootCoroutine();
+            _isShootingCoroutineStarted = true;
+            PlayerAnimatorController.playerAnimator.Play(
+                _bowController.weaponComboStatsArray[0].animationsStateName); // TODO: mb make bow combo
         }
     }
 
     // invoke on button up
     public void BowShot()
     {
-        if (canAttack == false || isShootingCoroutineStarted == false)
+        if (_canAttack == false || _isShootingCoroutineStarted == false)
             return;
-        
+
         if (_weapon.weaponType == WeaponUtilities.WeaponTypes.bow)
         {
-            bowController.Shoot();
-            isShootingCoroutineStarted = false;
-            StartCoroutine(AttackCD(currenAttackCD));
+            _bowController.Shoot();
+            _isShootingCoroutineStarted = false;
+            StartCoroutine(AttackCD(_currenAttackCd));
         }
     }
-    
+
     IEnumerator AttackCD(float time2Wait)
     {
         if (time2Wait == 0)
             Debug.LogError("ERROR");
 
-        canAttack = false;
+        _canAttack = false;
         yield return new WaitForSeconds(1f / time2Wait);
-        canAttack = true;
+        _canAttack = true;
     }
-    
+
     private void OnDrawGizmos()
     {
         if (Application.isPlaying == false)
@@ -110,9 +124,9 @@ public class PlayerCombatController : MonoBehaviour
         if (Application.isPlaying)
         {
             Gizmos.DrawLine(_playerTransform.position + attackOffset,
-                            _playerTransform.position +
-                            attackOffset +
-                            _playerTransform.forward * attackDistance);
+                _playerTransform.position +
+                attackOffset +
+                _playerTransform.forward * attackDistance);
         }
     }
 }

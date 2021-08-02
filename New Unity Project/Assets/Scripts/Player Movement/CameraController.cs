@@ -71,12 +71,13 @@ public class CameraController : MonoBehaviour
 
         void ChangeRotation()
         {
-            _cameraController.transform.rotation =
-                Quaternion.Euler(_cameraController.transform.rotation.eulerAngles.x -
-                                 CsGlobal.mouseYAxis * sensitivity,
-                                 _cameraController.transform.rotation.eulerAngles.y +
+            var rotation = _cameraController.transform.rotation;
+            rotation = Quaternion.Euler(rotation.eulerAngles.x -
+                                        CsGlobal.mouseYAxis * sensitivity,
+                                 rotation.eulerAngles.y +
                                  CsGlobal.mouseXAxis * sensitivity,
-                                 _cameraController.transform.rotation.eulerAngles.z);
+                                 rotation.eulerAngles.z);
+            _cameraController.transform.rotation = rotation;
         }
 
         void LookAtTarget()

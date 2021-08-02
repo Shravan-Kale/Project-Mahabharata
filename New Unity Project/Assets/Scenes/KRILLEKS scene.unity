@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1478.846, g: 1831.9392, b: 2425.4006, a: 1}
+  m_IndirectSpecularColor: {r: 1481.7754, g: 1835.8867, b: 2430.4492, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -516,11 +516,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 534450ad5d01c7f45b9128ec495817b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  attackSpeed: 2
   weaponType: 0
   weaponContainer: {fileID: 1860574842}
-  animationStateName: Sword
+  weaponComboStatsArray:
+  - animationsStateName: Sword
+    attackSpeed: 1
+    damage: 10
+  - animationsStateName: Sword_Inward_Slashcombo1
+    attackSpeed: 0.5
+    damage: 40
+  - animationsStateName: Sword_Outward_Slashcombo_2
+    attackSpeed: 0.5
+    damage: 50
+  comboResetTimer: 3
+  currentComboIndex: 0
 --- !u!1 &217220549 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100344, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
@@ -911,11 +920,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559b2f232e6baa645a6ff0f4c571e46f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  attackSpeed: 0.5
   weaponType: 1
   weaponContainer: {fileID: 193672928}
-  animationStateName: standing aim overdraw
+  weaponComboStatsArray: []
+  comboResetTimer: 0
+  currentComboIndex: 0
   arrowPrefab: {fileID: 7122494100823247631, guid: 59cc8d38a1460c641a681337b5d824f4, type: 3}
   forceIncrease: 5
   maxForce: 20
@@ -1873,7 +1882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1a8b2c4861f8e048b92e5648922dee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropForce: 45
+  dropForceSerializable: 100
 --- !u!114 &1298389496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2446,6 +2455,21 @@ MonoBehaviour:
       - m_Target: {fileID: 1437835449}
         m_TargetAssemblyTypeName: EnemySelector, Assembly-CSharp
         m_MethodName: SelectEnemy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ZButtonClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1437835449}
+        m_TargetAssemblyTypeName: EnemySelector, Assembly-CSharp
+        m_MethodName: SelectAnotherEnemy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
