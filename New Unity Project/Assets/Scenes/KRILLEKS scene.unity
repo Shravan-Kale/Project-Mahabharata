@@ -1882,7 +1882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1a8b2c4861f8e048b92e5648922dee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropForceSerializable: 100
+  dropForceSerializable: 350
 --- !u!114 &1298389496
 MonoBehaviour:
   m_ObjectHideFlags: 0
