@@ -518,18 +518,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponType: 0
   weaponContainer: {fileID: 1860574842}
-  weaponComboStatsArray:
-  - animationsStateName: Sword
-    attackSpeed: 1
-    damage: 10
-  - animationsStateName: Sword_Inward_Slashcombo1
-    attackSpeed: 0.5
-    damage: 40
-  - animationsStateName: Sword_Outward_Slashcombo_2
-    attackSpeed: 0.5
-    damage: 50
+  weaponComboChains:
+  - weaponComboChain:
+    - animationsStateName: Sword
+      attackSpeed: 1
+      damage: 10
+    - animationsStateName: Sword
+      attackSpeed: 1
+      damage: 20
+    - animationsStateName: Sword
+      attackSpeed: 1
+      damage: 25
+  - weaponComboChain:
+    - animationsStateName: Sword_Inward_Slashcombo1
+      attackSpeed: 1
+      damage: 30
+    - animationsStateName: Sword_Inward_Slashcombo1
+      attackSpeed: 1
+      damage: 50
+    - animationsStateName: Sword_Inward_Slashcombo1
+      attackSpeed: 1
+      damage: 70
+  - weaponComboChain:
+    - animationsStateName: Sword_Outward_Slashcombo_2
+      attackSpeed: 1
+      damage: 30
+    - animationsStateName: Sword_Outward_Slashcombo_2
+      attackSpeed: 1
+      damage: 50
+    - animationsStateName: Sword_Outward_Slashcombo_2
+      attackSpeed: 1
+      damage: 70
   comboResetTimer: 3
   currentComboIndex: 0
+  comboChain: -1
 --- !u!1 &217220549 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100344, guid: 9c17f9b307a55d54880a840580ea9580, type: 3}
@@ -922,9 +944,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponType: 1
   weaponContainer: {fileID: 193672928}
-  weaponComboStatsArray: []
+  weaponComboChains: []
   comboResetTimer: 0
   currentComboIndex: 0
+  comboChain: -1
   arrowPrefab: {fileID: 7122494100823247631, guid: 59cc8d38a1460c641a681337b5d824f4, type: 3}
   forceIncrease: 5
   maxForce: 20
