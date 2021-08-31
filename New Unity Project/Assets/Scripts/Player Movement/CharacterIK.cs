@@ -21,14 +21,7 @@ public class CharacterIK : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (character.Velocity.magnitude > 1f)
-        {
-            ik_weight = Mathf.Lerp(ik_weight, 0, Time.deltaTime * Lerp_Speed);
-        }
-        else
-        {
-            ik_weight = Mathf.Lerp(ik_weight, 1, Time.deltaTime * Lerp_Speed);
-        }
+        ik_weight = Mathf.Lerp(ik_weight, CsGlobal.isPlayerMoving ? 0 : 1, Time.deltaTime * Lerp_Speed);
     }
 
     void OnAnimatorIK()

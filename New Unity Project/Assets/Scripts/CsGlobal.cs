@@ -14,12 +14,14 @@ public class CsGlobal : MonoBehaviour
 
     public static float horizontalRawAxis;
     public static float verticalRawAxis;
-    public static bool isPlayerMoving;
-    public static bool isPressingE;
-    public static bool isPressingQ;
     public static float mouseYAxis;
     public static float mouseXAxis;
     public static float mouseWheelAxis;
+    public static bool isPlayerMoving;
+    public static bool isPressingE;
+    public static bool isPressingQ;
+    public static bool isPressingShift;
+    public static bool isPressingControl;
 
     private void Awake()
     {
@@ -45,6 +47,8 @@ public class CsGlobal : MonoBehaviour
 
         isPressingE = Input.GetKeyDown(KeyCode.E);
         isPressingQ = Input.GetKeyDown(KeyCode.Q);
+        isPressingShift = Input.GetKey(KeyCode.LeftShift);
+        isPressingControl = Input.GetKey(KeyCode.LeftControl);
 
         horizontalRawAxis = Input.GetAxisRaw("Horizontal");
         verticalRawAxis = Input.GetAxisRaw("Vertical");

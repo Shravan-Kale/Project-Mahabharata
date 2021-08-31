@@ -6,13 +6,10 @@ public class PlayerAnimationEvents : MonoBehaviour
 {
     public AudioClip aud_footstep;
     public AudioSource Audio;
-    public CharacterMovement characterMovement;
    
     public void Footstep(float TargetWalkSpeed)
     {
-       
-        
-        float actualSpeed = characterMovement.Velocity.magnitude;
+        float actualSpeed = CharacterMovement.velocity.magnitude;
 
         if (Getmovementstate(TargetWalkSpeed) == Getmovementstate(actualSpeed))
         {

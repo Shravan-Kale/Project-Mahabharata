@@ -2,48 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Character))]
 public class PlayerAnimatorController : MonoBehaviour
 {
+    // public static variables
     public static Animator playerAnimator;
-    private Character character;
-    private float speed;
-    private static readonly int IsAttacking = Animator.StringToHash("isAttacking");
+    private static readonly int State = Animator.StringToHash("State");
 
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         playerAnimator = gameObject.GetComponentInChildren<Animator>();
-        character = GetComponent<Character>();
     }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (playerAnimator == null)
-        {
-            Debug.Log("No Valid Player Animator");
-        }
-
-        speed = Mathf.SmoothStep(speed, character.getVelocity(), Time.deltaTime * 100);
-
-        playerAnimator.SetFloat("Velocity", speed);
-    }
-
-    public void SetMovementMode(MovementMode mode)
+    
+    public static void SetMovementMode(MovementMode mode)
     {
         switch (mode)
         {
             case MovementMode.Walking:
             {
-                playerAnimator.SetInteger("Movement-State", 0);
-                break;
-            }
-
-            case MovementMode.Running:
-            {
-                playerAnimator.SetInteger("Movement-State", 0);
+                playerAnimator.SetInteger(State, 1);
                 break;
             }
             case MovementMode.Crouching:
@@ -51,16 +27,15 @@ public class PlayerAnimatorController : MonoBehaviour
                 playerAnimator.SetInteger("Movement-State", 1);
                 break;
             }
-            case MovementMode.Proning:
-            {
-                playerAnimator.SetInteger("Movement-State", 2);
-                break;
-            }
             case MovementMode.Sprinting:
             {
-                playerAnimator.SetInteger("Movement-State", 3);
+                if (playerAnimator)
+                    playerAnimator.SetInteger(State,2);
                 break;
             }
+            default:
+                playerAnimator.SetInteger(State,0);
+                break;
         }
     }
 

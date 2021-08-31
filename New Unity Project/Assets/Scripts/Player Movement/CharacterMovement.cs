@@ -2,117 +2,117 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public enum MovementMode
-{
-    Walking,
-    Running,
-    Crouching,
-    Proning,
-    Sprinting
-};
-
-[RequireComponent(typeof(Rigidbody))]
 public class CharacterMovement : MonoBehaviour
 {
-    private Vector3 velocity;
-    public Transform characterMesh;
-    public float Speed = 5f;
-    private Rigidbody rigidBody;
-    private float SmoothSpeed;
-    private float rotationSpeed = 5f;
+   [SerializeField] private float walkSpeed = 5f;
+   [SerializeField] private float sprintSpeed = 10f;
+   [SerializeField] private float crouchSpeed = 5f;
+   [SerializeField] private float rotationSpeed = 5f;
 
+   // public static variables
+   public static Vector3 velocity;
 
-    public float walkspeed = 5f;
-    public float runspeed = 10f;
-    public float crouchspeed = 5f;
-    public float pronespeed = 2f;
+   // public variables
+   public Transform characterMesh;
 
-    private MovementMode movementMode;
+   // private variables
+   private MovementMode _movementMode;
+   private float _currentSpeed = -1;
+   private Vector3 _movementVector;
+   private Rigidbody _rb;
+   private Transform _cameraTransform;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        rigidBody = GetComponent<Rigidbody>();
-    }
+   void Start()
+   {
+      _rb = GetComponent<Rigidbody>();
+      _cameraTransform = Camera.main.transform;
+   }
 
+   void FixedUpdate()
+   {
+      if (CsGlobal.isPlayerMoving == false)
+      {
+         SetMovementMode();
+         return;
+      }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        //transform.Translate(velocity.normalized*Speed*Time.deltaTime);
+      if (CsGlobal.horizontalRawAxis != 0)
+         velocity = _cameraTransform.right * CsGlobal.horizontalRawAxis;
+      if (CsGlobal.verticalRawAxis != 0)
+         velocity = _cameraTransform.forward * CsGlobal.verticalRawAxis;
+      velocity.y = 0;
 
+      Movement();
+      Rotation();
+      SetMovementMode();
 
-        if (velocity.magnitude > 0)
-        {
-            rigidBody.velocity = new Vector3(velocity.normalized.x * SmoothSpeed,
-                                             rigidBody.velocity.y,
-                                             velocity.normalized.z * SmoothSpeed);
-            SmoothSpeed = Mathf.Lerp(SmoothSpeed, Speed, Time.deltaTime);
-            //characterMesh.rotation = Quaternion.LookRotation(velocity);
+      void Movement()
+      {
+         _movementVector = new Vector3(velocity.normalized.x,
+                                       _rb.velocity.y,
+                                       velocity.normalized.z);
+         transform.Translate(_movementVector * (Time.fixedDeltaTime * _currentSpeed));
+      }
+
+      void Rotation()
+      {
+         // rotation
+         if (velocity.magnitude > 0)
+         {
             if (EnemySelector.isTargetSelected == false)
-                characterMesh.rotation = Quaternion.Lerp(characterMesh.rotation,
-                                                         Quaternion.LookRotation(velocity),
-                                                         Time.deltaTime * rotationSpeed);
+               characterMesh.rotation = Quaternion.Lerp(characterMesh.rotation,
+                                                        Quaternion.LookRotation(velocity),
+                                                        Time.deltaTime * rotationSpeed);
             else
             {
-                var target = new Vector3(EnemySelector._closestEnemy.transform.position.x,
-                                         transform.position.y,
-                                         EnemySelector._closestEnemy.transform.position.z);
-                transform.LookAt(target);
+               var target = new Vector3(EnemySelector._closestEnemy.transform.position.x,
+                                        transform.position.y,
+                                        EnemySelector._closestEnemy.transform.position.z);
+               transform.LookAt(target);
             }
-        }
-        else
-        {
-            SmoothSpeed = Mathf.Lerp(SmoothSpeed, 0, Time.deltaTime);
-        }
-    }
+         }
+      }
+   }
 
-    public Vector3 Velocity
-    {
-        get =>
-            rigidBody.velocity;
-        set =>
-            velocity = value;
-    }
 
-    public void SetMovementMode(MovementMode mode)
-    {
-        movementMode = mode;
+   public void SetMovementMode()
+   {
+      if (CsGlobal.isPressingShift)
+         _movementMode = MovementMode.Sprinting;
+      else if (CsGlobal.isPressingControl)
+         _movementMode = MovementMode.Crouching;
+      else if (CsGlobal.isPlayerMoving)
+         _movementMode = MovementMode.Walking;
+      else
+         _movementMode = MovementMode.Idle;
 
-        switch (mode)
-        {
-            case MovementMode.Walking:
-            {
-                Speed = walkspeed;
-                break;
-            }
+      PlayerAnimatorController.SetMovementMode(_movementMode);
 
-            case MovementMode.Running:
-            {
-                Speed = runspeed;
-                break;
-            }
-            case MovementMode.Crouching:
-            {
-                Speed = crouchspeed;
-                break;
-            }
-            case MovementMode.Proning:
-            {
-                Speed = pronespeed;
-                break;
-            }
-            case MovementMode.Sprinting:
-            {
-                Speed = 14;
-                break;
-            }
-        }
-    }
+      switch (_movementMode)
+      {
+         case MovementMode.Walking:
+         {
+            _currentSpeed = walkSpeed;
+            break;
+         }
 
-    public MovementMode GetMovementMode()
-    {
-        return movementMode;
-    }
+         case MovementMode.Sprinting:
+         {
+            _currentSpeed = sprintSpeed;
+            break;
+         }
+         case MovementMode.Crouching:
+         {
+            _currentSpeed = crouchSpeed;
+            break;
+         }
+      }
+   }
+
+   public MovementMode GetMovementMode()
+   {
+      return _movementMode;
+   }
 }

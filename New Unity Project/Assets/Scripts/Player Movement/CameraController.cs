@@ -144,8 +144,7 @@ public class CameraController : MonoBehaviour
          if (_rotation.x > maxXAngle ||
              _rotation.x < minXAngle)
          {
-            UnityEditor.TransformUtils.SetInspectorRotation(
-                                                            _cameraController.transform,
+            UnityEditor.TransformUtils.SetInspectorRotation(_cameraController.transform,
                                                             new Vector3(Mathf.Clamp(_rotation.x,
                                                                                     minXAngle,
                                                                                     maxXAngle),
